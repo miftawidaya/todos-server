@@ -1,7 +1,7 @@
-import express from 'express';
-import { getTodos } from 'mockup/todos';
+import express from 'express'
+import { getTodos } from '../../mockup/todos'
 
-const router = express.Router();
+const router = express.Router()
 
 /**
  * @swagger
@@ -71,47 +71,47 @@ router.get('/scroll', async (req, res) => {
       limit = 10,
       sort = 'date',
       order = 'asc',
-    } = req.query;
+    } = req.query
 
-    let todos = getTodos();
+    let todos = getTodos()
 
     if (completed === 'true') {
-      todos = todos.filter((todo) => todo.completed);
+      todos = todos.filter((todo) => todo.completed)
     } else if (completed === 'false') {
-      todos = todos.filter((todo) => !todo.completed);
+      todos = todos.filter((todo) => !todo.completed)
     }
 
     if (sort && ['title', 'date'].includes(sort as string)) {
       todos = todos.sort((a, b) => {
-        const key = sort as 'title' | 'date';
+        const key = sort as 'title' | 'date'
 
-        const aValue = key === 'date' ? new Date(a[key]).getTime() : a[key];
-        const bValue = key === 'date' ? new Date(b[key]).getTime() : b[key];
+        const aValue = key === 'date' ? new Date(a[key]).getTime() : a[key]
+        const bValue = key === 'date' ? new Date(b[key]).getTime() : b[key]
 
-        if (aValue < bValue) return order === 'asc' ? -1 : 1;
-        if (aValue > bValue) return order === 'asc' ? 1 : -1;
-        return 0;
-      });
+        if (aValue < bValue) return order === 'asc' ? -1 : 1
+        if (aValue > bValue) return order === 'asc' ? 1 : -1
+        return 0
+      })
     }
 
-    const cursorNum = parseInt(nextCursor as string, 10);
-    const limitNum = parseInt(limit as string, 10);
+    const cursorNum = parseInt(nextCursor as string, 10)
+    const limitNum = parseInt(limit as string, 10)
 
-    const paginatedTodos = todos.slice(cursorNum, cursorNum + limitNum);
+    const paginatedTodos = todos.slice(cursorNum, cursorNum + limitNum)
 
-    const newNextCursor = cursorNum + paginatedTodos.length;
-    const hasNextPage = newNextCursor < todos.length;
+    const newNextCursor = cursorNum + paginatedTodos.length
+    const hasNextPage = newNextCursor < todos.length
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     res.status(200).json({
       todos: paginatedTodos,
       nextCursor: hasNextPage ? newNextCursor : null,
       hasNextPage,
-    });
+    })
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Server error' })
   }
-});
+})
 
-export { router as getScrollTodosRouter };
+export { router as getScrollTodosRouter }

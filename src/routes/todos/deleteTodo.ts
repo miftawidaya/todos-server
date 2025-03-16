@@ -1,14 +1,14 @@
-import express from 'express';
-import { handleZodErrorResponse } from 'utils/error';
-import { z } from 'zod';
-import { TodoSchema } from 'types/todos';
-import { deleteTodo, getTodo } from 'mockup/todos';
+import express from 'express'
+import { handleZodErrorResponse } from '../../utils/error'
+import { z } from 'zod'
+import { TodoSchema } from '../../types/todos'
+import { deleteTodo, getTodo } from '../../mockup/todos'
 
-const router = express.Router();
+const router = express.Router()
 
 const deleteTodoParamsSchema = z.object({
   todoId: TodoSchema.shape.id,
-});
+})
 
 /**
  * @swagger
@@ -39,20 +39,20 @@ const deleteTodoParamsSchema = z.object({
 
 router.delete('/:todoId', async (req, res) => {
   try {
-    const { todoId } = deleteTodoParamsSchema.parse(req.params);
+    const { todoId } = deleteTodoParamsSchema.parse(req.params)
 
-    const deletedTodo = getTodo(todoId) ?? {};
+    const deletedTodo = getTodo(todoId) ?? {}
 
-    deleteTodo(todoId);
+    deleteTodo(todoId)
 
-    res.status(200).json(deletedTodo);
+    res.status(200).json(deletedTodo)
   } catch (error) {
-    console.error('Error deleting user:', error);
+    console.error('Error deleting user:', error)
 
-    handleZodErrorResponse(res, error);
+    handleZodErrorResponse(res, error)
 
-    res.status(500).json({ error: 'Failed to delete user', detail: error });
+    res.status(500).json({ error: 'Failed to delete user', detail: error })
   }
-});
+})
 
-export { router as deleteTodoRouter };
+export { router as deleteTodoRouter }

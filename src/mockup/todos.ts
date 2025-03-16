@@ -1,5 +1,5 @@
-import { NewTodo, Todo } from 'types/todos';
-import { v4 as uuid } from 'uuid';
+import { NewTodo, Todo } from '../types/todos'
+import { v4 as uuid } from 'uuid'
 
 let todosMockup: Todo[] = [
   {
@@ -554,32 +554,32 @@ let todosMockup: Todo[] = [
     completed: false,
     date: new Date('2023-12-31'),
   },
-];
+]
 
-export const getTodos = () => todosMockup;
+export const getTodos = () => todosMockup
 
 export const addTodo = (newTodo: NewTodo) => {
   const todoWithDate: Todo = {
     id: uuid(),
     date: new Date(),
     ...newTodo,
-  };
+  }
 
-  todosMockup.push(todoWithDate);
-  return todoWithDate;
-};
+  todosMockup.push(todoWithDate)
+  return todoWithDate
+}
 
 export const deleteTodo = (todoId: string) => {
-  todosMockup = todosMockup.filter((todo) => todo.id !== todoId);
-};
+  todosMockup = todosMockup.filter((todo) => todo.id !== todoId)
+}
 export const getTodo = (todoId: string) => {
-  return todosMockup.find((todo) => todo.id === todoId);
-};
+  return todosMockup.find((todo) => todo.id === todoId)
+}
 export const setTodos = (todoId: string, updatedTodo: Todo) => {
   todosMockup = todosMockup.map((todo) => {
     if (todo.id === todoId) {
-      return updatedTodo;
+      return updatedTodo
     }
-    return todo;
-  });
-};
+    return todo
+  })
+}
