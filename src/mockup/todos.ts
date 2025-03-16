@@ -30,7 +30,7 @@ let todosMockup: Todo[] = [
     id: uuid(),
     title: 'Read a book',
     completed: true,
-    date: new Date('2025-10-05'),
+    date: new Date('2024-10-05'),
   },
   {
     id: uuid(),
