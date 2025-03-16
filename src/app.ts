@@ -1,15 +1,15 @@
-import express from 'express';
-import cors from 'cors';
-import path from 'path';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import { todosRouter } from './routes/todos';
+import express from 'express'
+import cors from 'cors'
+import path from 'path'
+import swaggerUi from 'swagger-ui-express'
+import swaggerJsdoc from 'swagger-jsdoc'
+import { todosRouter } from './routes/todos'
 
 type SwaggerRequest = {
-  headers: Record<string, string>;
-  method?: string;
-  url?: string;
-};
+  headers: Record<string, string>
+  method?: string
+  url?: string
+}
 
 const swaggerOptions = {
   definition: {
@@ -54,19 +54,20 @@ const swaggerOptions = {
     },
   },
   apis: ['./src/routes/todos/*.ts'],
-};
+}
 
-const swaggerDocs = swaggerJsdoc(swaggerOptions);
+const swaggerDocs = swaggerJsdoc(swaggerOptions)
 
-export const app = express();
+export const app = express()
+const port = process.env.PORT ?? 8080
 
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
 app.use(
   '/swagger-ui.css',
   express.static(path.join(__dirname, 'css/swagger-ui.css'))
-);
+)
 
 app.use(
   '/api-docs',
@@ -76,17 +77,17 @@ app.use(
     customSiteTitle: 'Todo API Documentation',
     swaggerOptions: {
       requestInterceptor: (req: SwaggerRequest) => {
-        console.log('Intercepting request:', req);
-        req.headers['api-key'] = '0ICVyrNhPL56Oss58qv-_y42PhSQvYcPm6Vz26j4bNw';
-        return req;
+        console.log('Intercepting request:', req)
+        req.headers['api-key'] = '0ICVyrNhPL56Oss58qv-_y42PhSQvYcPm6Vz26j4bNw'
+        return req
       },
     },
   })
-);
+)
 
-app.use('/todos', todosRouter);
+app.use('/todos', todosRouter)
 
-app.listen(8080, () => {
-  console.log('Server running on port 8080');
-  console.log('Swagger docs available at http://localhost:8080/api-docs');
-});
+app.listen(port, () => {
+  console.log('Server running on port ${port}')
+  console.log('Swagger docs available at http://localhost:${port}/api-docs')
+})
