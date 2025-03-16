@@ -88,6 +88,6 @@ app.use(
 app.use('/todos', todosRouter)
 
 app.listen(port, () => {
-  console.log('Server running on port ${port}')
-  console.log('Swagger docs available at http://localhost:${port}/api-docs')
+  console.log(`Server running on port ${port}`)
+  console.log(`Swagger docs available at https://localhost:${port}/api-docs`)
 })
