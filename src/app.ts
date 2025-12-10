@@ -6,12 +6,6 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import { todosRouter } from './routes/todos';
 import { authRouter } from './routes/auth';
 
-type SwaggerRequest = {
-  headers: Record<string, string>;
-  method?: string;
-  url?: string;
-};
-
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -148,17 +142,13 @@ app.use(
   swaggerUi.setup(swaggerDocs, {
     customCssUrl: '/swagger-ui.css',
     customSiteTitle: 'Todo API Documentation',
-    swaggerOptions: {
-      requestInterceptor: (req: SwaggerRequest) => {
-        const apiKey = process.env.PRIVATE_API_KEY;
-        if (apiKey) {
-          req.headers['api-key'] = apiKey;
-        }
-        return req;
-      },
-    },
   })
 );
+
+// Expose raw swagger JSON for debugging
+app.get('/api-docs.json', (_req, res) => {
+  res.json(swaggerDocs);
+});
 
 app.use('/todos', todosRouter);
 app.use('/auth', authRouter);

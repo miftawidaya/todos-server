@@ -9,9 +9,11 @@ const router = express.Router();
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Login user
+ *     summary: Login user (Mock Authentication)
+ *     description: Mock login endpoint. Accepts any valid email and password (min 6 chars). Returns a mock token and user object.
  *     tags:
  *       - Auth
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -25,11 +27,11 @@ const router = express.Router();
  *               email:
  *                 type: string
  *                 format: email
- *                 description: User's email address
+ *                 example: "user@example.com"
  *               password:
  *                 type: string
  *                 minLength: 6
- *                 description: User's password
+ *                 example: "password123"
  *     responses:
  *       200:
  *         description: Login successful
@@ -40,25 +42,39 @@ const router = express.Router();
  *               properties:
  *                 token:
  *                   type: string
- *                   description: JWT token for authentication
+ *                   example: "mock-jwt-token-abc123"
  *                 user:
  *                   type: object
  *                   properties:
  *                     id:
  *                       type: string
- *                       description: User's unique ID
+ *                       example: "123e4567-e89b-12d3-a456-426614174000"
  *                     email:
  *                       type: string
- *                       description: User's email
+ *                       example: "user@example.com"
  *                     name:
  *                       type: string
- *                       description: User's name (optional)
+ *                       example: "user"
  *       400:
- *         description: Invalid request body
- *       401:
- *         description: Invalid credentials
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
  *       500:
  *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
  */
 
 router.post('/', async (req, res) => {
