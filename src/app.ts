@@ -69,6 +69,59 @@ const swaggerOptions = {
           },
           required: ['title', 'completed'],
         },
+        LoginRequest: {
+          type: 'object',
+          properties: {
+            email: {
+              type: 'string',
+              format: 'email',
+              description: 'User email',
+            },
+            password: {
+              type: 'string',
+              minLength: 6,
+              description: 'User password (min 6 chars)',
+            },
+          },
+          required: ['email', 'password'],
+        },
+        LoginResponse: {
+          type: 'object',
+          properties: {
+            token: { type: 'string', description: 'JWT token' },
+            user: { $ref: '#/components/schemas/User' },
+          },
+        },
+        User: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', description: 'User ID' },
+            email: { type: 'string', description: 'User email' },
+            name: { type: 'string', description: 'User name (optional)' },
+          },
+        },
+        Error: {
+          type: 'object',
+          properties: {
+            error: { type: 'string', description: 'Error message' },
+          },
+        },
+        ValidationError: {
+          type: 'object',
+          properties: {
+            error: { type: 'string', description: 'Error message' },
+            detail: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  path: { type: 'string' },
+                  message: { type: 'string' },
+                },
+              },
+            },
+          },
+        },
       },
     },
     security: [{ ApiKeyAuth: [] }],
