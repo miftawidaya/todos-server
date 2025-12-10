@@ -3,17 +3,23 @@ import { app } from '../../../app';
 
 describe('POST /auth/login', () => {
   describe('Valid requests', () => {
-    it('should return token and user on successful login', async () => {
+    it('should return token and user in standardized format on successful login', async () => {
       const response = await request(app).post('/auth/login').send({
         email: 'test@example.com',
         password: 'password123',
       });
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('token');
-      expect(response.body).toHaveProperty('user');
-      expect(response.body.user).toHaveProperty('id');
-      expect(response.body.user).toHaveProperty('email', 'test@example.com');
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('message', 'Login successful');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body.data).toHaveProperty('token');
+      expect(response.body.data).toHaveProperty('user');
+      expect(response.body.data.user).toHaveProperty('id');
+      expect(response.body.data.user).toHaveProperty(
+        'email',
+        'test@example.com'
+      );
     });
 
     it('should extract name from email', async () => {
@@ -23,7 +29,7 @@ describe('POST /auth/login', () => {
       });
 
       expect(response.status).toBe(200);
-      expect(response.body.user.name).toBe('john.doe');
+      expect(response.body.data.user.name).toBe('john.doe');
     });
   });
 
