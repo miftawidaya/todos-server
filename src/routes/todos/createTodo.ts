@@ -1,9 +1,9 @@
-import express from 'express'
-import { handleZodErrorResponse } from '../../utils/error'
-import { NewTodoSchema } from '../../types/todos'
-import { addTodo } from '../../mockup/todos'
+import express from "express";
+import { handleZodErrorResponse } from "../../utils/error";
+import { NewTodoSchema } from "../../types/todos";
+import { addTodo } from "../../mockup/todos";
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @swagger
@@ -29,20 +29,22 @@ const router = express.Router()
  *         description: Server error
  */
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const newTodo = NewTodoSchema.parse(req.body)
+    const newTodo = NewTodoSchema.parse(req.body);
 
-    const insertedTodo = addTodo(newTodo)
+    const insertedTodo = addTodo(newTodo);
 
-    res.status(200).json(insertedTodo)
+    res.status(200).json(insertedTodo);
   } catch (error) {
-    console.error('Error creating user:', error)
+    console.error("Error creating todo:", error);
 
-    handleZodErrorResponse(res, error)
+    if (handleZodErrorResponse(res, error)) {
+      return;
+    }
 
-    res.status(500).json({ error: 'Failed to create user', detail: error })
+    res.status(500).json({ error: "Failed to create todo" });
   }
-})
+});
 
-export { router as createTodoRouter }
+export { router as createTodoRouter };

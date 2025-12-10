@@ -1,14 +1,17 @@
 {
-  "name": "server",
+  "name": "todos-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A professional REST API for managing todos built with Express.js and TypeScript",
+  "main": "dist/app.js",
   "scripts": {
     "prestart": "npm run build",
     "dev": "cross-env DOTENV_CONFIG_PATH=.env.local nodemon --exec ts-node -r dotenv/config -r tsconfig-paths/register src/app.ts",
     "start": "DOTENV_CONFIG_PATH=.env.local node -r dotenv/config -r tsconfig-paths/register dist/app.js",
     "build": "tsc",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
   },
   "keywords": [],
   "author": "Edwin Anderson",

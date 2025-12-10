@@ -1,9 +1,9 @@
-import express from 'express'
-import { handleZodErrorResponse } from '../../utils/error'
-import { TodoSchema } from '../../types/todos'
-import { getTodo, getTodos, setTodos } from '../../mockup/todos'
+import express from 'express';
+import { handleZodErrorResponse } from '../../utils/error';
+import { TodoSchema } from '../../types/todos';
+import { getTodo, getTodos, setTodos } from '../../mockup/todos';
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @swagger
@@ -38,32 +38,35 @@ const router = express.Router()
  *         description: Server error
  */
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res): Promise<void> => {
   try {
     const updatedTodo = TodoSchema.parse({
       ...req.body,
       id: req.params.id,
       date: new Date(req.body.date),
-    })
+    });
 
-    const todos = getTodos()
+    const todos = getTodos();
 
-    const searchedTodo = todos.find((todo) => todo.id === updatedTodo.id)
+    const searchedTodo = todos.find((todo) => todo.id === updatedTodo.id);
 
     if (!searchedTodo) {
-      return res.status(404).json({ error: 'Todo not found' })
+      res.status(404).json({ error: 'Todo not found' });
+      return;
     }
 
-    setTodos(updatedTodo.id, updatedTodo)
+    setTodos(updatedTodo.id, updatedTodo);
 
-    res.status(200).json(getTodo(updatedTodo.id))
+    res.status(200).json(getTodo(updatedTodo.id));
   } catch (error) {
-    console.error('Error updating todo:', error)
+    console.error('Error updating todo:', error);
 
-    handleZodErrorResponse(res, error)
+    if (handleZodErrorResponse(res, error)) {
+      return;
+    }
 
-    res.status(500).json({ error: 'Failed to update todo', detail: error })
+    res.status(500).json({ error: 'Failed to update todo' });
   }
-})
+});
 
-export { router as updateTodoRouter }
+export { router as updateTodoRouter };
