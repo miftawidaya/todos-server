@@ -1,7 +1,7 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { handleZodErrorResponse } from '../../utils/error';
-import { LoginRequestSchema, LoginResponse } from '../../types/auth';
+import { LoginRequestSchema } from '../../types/auth';
 
 const router = express.Router();
 
@@ -40,21 +40,30 @@ const router = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 token:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
  *                   type: string
- *                   example: "mock-jwt-token-abc123"
- *                 user:
+ *                   example: "Login successful"
+ *                 data:
  *                   type: object
  *                   properties:
- *                     id:
+ *                     token:
  *                       type: string
- *                       example: "123e4567-e89b-12d3-a456-426614174000"
- *                     email:
- *                       type: string
- *                       example: "user@example.com"
- *                     name:
- *                       type: string
- *                       example: "user"
+ *                       example: "mock-jwt-token-abc123"
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: string
+ *                           example: "123e4567-e89b-12d3-a456-426614174000"
+ *                         email:
+ *                           type: string
+ *                           example: "user@example.com"
+ *                         name:
+ *                           type: string
+ *                           example: "user"
  *       400:
  *         description: Validation error
  *         content:
@@ -100,9 +109,13 @@ router.post('/', async (req, res) => {
     // Simulated token (replace with actual JWT generation)
     const mockToken = `mock-jwt-token-${uuidv4()}`;
 
-    const response: LoginResponse = {
-      token: mockToken,
-      user: mockUser,
+    const response = {
+      success: true,
+      message: 'Login successful',
+      data: {
+        token: mockToken,
+        user: mockUser,
+      },
     };
 
     res.status(200).json(response);
