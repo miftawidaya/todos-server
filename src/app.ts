@@ -131,16 +131,17 @@ const port = process.env.PORT ?? 8080;
 app.use(cors());
 app.use(express.json());
 
-app.use(
-  '/swagger-ui.css',
-  express.static(path.join(__dirname, 'css/swagger-ui.css'))
-);
-
+// Use CDN for Swagger UI assets to ensure they load correctly in serverless environment
 app.use(
   '/api-docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocs, {
-    customCssUrl: '/swagger-ui.css',
+    customCssUrl:
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.min.css',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-bundle.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-standalone-preset.js',
+    ],
     customSiteTitle: 'Todo API Documentation',
   })
 );
