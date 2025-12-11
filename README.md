@@ -44,14 +44,16 @@ After clicking the button above:
 1. **Connect your GitHub account** (if not already connected)
 2. **Set Environment Variables** in Vercel:
    - `JWT_SECRET`: A strong random string (e.g., `your-super-secret-key-change-this`)
-   - `API_URL`: Your production URL (e.g., `https://john-todo-api-server.vercel.app`)
-     - ⚠️ Leave this empty for now, we'll set it after deployment
+   - `API_URL`: Fill with placeholder for now (e.g., `https://john-todo-api-server.vercel.app`)
+     - 💡 **Tip:** Use your expected project name + `.vercel.app`
+     - We'll update this with the actual URL after deployment
 3. **Click "Deploy"** and wait ~2 minutes
 4. **After deployment completes:**
-   - Copy your production URL (e.g., `https://john-todo-api-server.vercel.app`)
+   - Copy your **actual** production URL from Vercel (e.g., `https://john-todo-api-server.vercel.app`)
    - Go to **Settings** → **Environment Variables**
-   - Add `API_URL` with your production URL
-   - **Redeploy** the project
+   - **Edit** `API_URL` and replace with your actual production URL
+   - **Click "Save"**
+   - **Redeploy** the project (Deployments → ... → Redeploy)
 
 **🎉 Done!** Your API is live and Swagger docs will show the correct URL!
 
