@@ -6,7 +6,9 @@
 [![Express](https://img.shields.io/badge/Express-4.18-lightgrey?logo=express)](https://expressjs.com/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
 
-REST API for learning frontend development - CRUD, Authentication, Pagination, and more.
+**A Todo List REST API** built with TypeScript, Express, and JWT authentication. Perfect for learning modern frontend development with React Query, SWR, or any state management library.
+
+**Features:** ✨ CRUD Operations • 🔐 JWT Authentication • 📄 Pagination & Infinite Scroll • 📚 Interactive Swagger Docs • ✅ Unit Tested
 
 ## ⚡ Quick Start (5 minutes)
 
@@ -76,10 +78,12 @@ vercel --prod
 
 ## 💡 Why This Project?
 
-Most learning APIs are either too simple (just mock data) or too complex (full production systems). This one hits the sweet spot: **real backend functionality** with **beginner-friendly documentation**. Perfect for building your portfolio or learning React Query, SWR, or any modern state management library.
+A **production-ready Todo List API** designed specifically for learning modern frontend development. Most learning APIs are either too simple (just mock data) or too complex (full production systems). This one hits the sweet spot: **real backend functionality** with **beginner-friendly documentation**.
+
+Perfect for building your portfolio or practicing with React Query, SWR, Zustand, or any modern state management library.
 
 - ✅ Interactive API docs (Swagger UI)
-- ✅ Real authentication and authorization patterns
+- ✅ Real JWT authentication and authorization
 - ✅ Both traditional and infinite scroll pagination
 - ✅ Comprehensive error handling examples
 - ✅ Unit tested with 90%+ coverage
@@ -138,7 +142,23 @@ API_URL=https://your-api.example.com
 
 This ensures your Swagger documentation always points to the correct URL! ✨
 
-### How to use it?
+---
+
+## 📚 API Documentation
+
+### Interactive Swagger UI
+
+Swagger UI is available at `http://localhost:8080/api-docs`
+
+**Authentication:**
+
+- All `/todos` endpoints are protected with JWT
+- You must include the JWT token in the `Authorization` header:
+  ```
+  Authorization: Bearer <your-token>
+  ```
+
+### Quick Start: Testing with cURL
 
 **Step 1: Login to get a token**
 
@@ -167,49 +187,19 @@ Response:
 
 **Step 2: Use the token in protected endpoints**
 
-**Option 1: Via Swagger UI (for testing)**
-
-## 📚 API Documentation
-
-Swagger UI is available at `http://localhost:8080/api-docs`
-
-**Authentication:**
-
-- All `/todos` endpoints are protected
-- You must include the JWT token in the `Authorization` header:
-  ```
-  Authorization: Bearer <your-token>
-  ```
+```bash
+curl -X GET http://localhost:8080/todos \
+  -H "Authorization: Bearer <your-token>"
+```
 
 ## 🤖 AI Code Generation (For Frontend Devs)
 
-To easiest way to generate frontend code (React Query, Types, Axios) that is compatible with this backend:
+The easiest way to generate frontend code (React Query, Types, Axios) that is compatible with this backend:
 
 1. Go to **[http://localhost:8080/api-docs.json](http://localhost:8080/api-docs.json)**
 2. Copy the entire JSON content
 3. Paste it to your AI Chat (ChatGPT/Claude/Cursor) with this prompt:
    > "Here is the backend API Swagger JSON. Please generate the frontend TypeScript types and React Query hooks for these endpoints. Use `Authorization: Bearer` header."
-
-**Option 2: Via Code (for frontend)**
-
-```javascript
-// Save token after login
-const loginResponse = await fetch('http://localhost:8080/auth/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ email: 'user@example.com', password: 'password123' }),
-});
-const { data } = await loginResponse.json();
-localStorage.setItem('token', data.token);
-
-// Use token in subsequent requests
-const token = localStorage.getItem('token');
-fetch('http://localhost:8080/todos', {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
-```
 
 ---
 
