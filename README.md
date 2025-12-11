@@ -1,6 +1,6 @@
 # 📝 Todo API Server
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server&env=JWT_SECRET,API_URL&envDescription=Required%20environment%20variables%20for%20the%20API&envLink=https://github.com/miftawidaya/todos-server%23environment-variables&project-name=john-todo-api-server&repository-name=john-todo-api-server)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green?logo=node.js)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.18-lightgrey?logo=express)](https://expressjs.com/)
@@ -35,7 +35,7 @@ npm run dev
 
 Deploy your own instance of this API in seconds:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server&env=JWT_SECRET,API_URL&envDescription=Required%20environment%20variables%20for%20the%20API&envLink=https://github.com/miftawidaya/todos-server%23environment-variables&project-name=my-todo-api&repository-name=my-todo-api)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server&env=JWT_SECRET,API_URL&envDescription=Required%20environment%20variables%20for%20the%20API&envLink=https://github.com/miftawidaya/todos-server%23environment-variables&project-name=john-todo-api-server&repository-name=john-todo-api-server)
 
 ### 📋 Deployment Checklist
 
@@ -44,11 +44,11 @@ After clicking the button above:
 1. **Connect your GitHub account** (if not already connected)
 2. **Set Environment Variables** in Vercel:
    - `JWT_SECRET`: A strong random string (e.g., `your-super-secret-key-change-this`)
-   - `API_URL`: Your production URL (e.g., `https://my-todo-api.vercel.app`)
+   - `API_URL`: Your production URL (e.g., `https://john-todo-api-server.vercel.app`)
      - ⚠️ Leave this empty for now, we'll set it after deployment
 3. **Click "Deploy"** and wait ~2 minutes
 4. **After deployment completes:**
-   - Copy your production URL (e.g., `https://my-todo-api.vercel.app`)
+   - Copy your production URL (e.g., `https://john-todo-api-server.vercel.app`)
    - Go to **Settings** → **Environment Variables**
    - Add `API_URL` with your production URL
    - **Redeploy** the project
