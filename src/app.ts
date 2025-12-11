@@ -42,5 +42,8 @@ if (process.env.NODE_ENV !== 'production' && process.env.VERCEL !== '1') {
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
     console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
+    console.log(
+      `Swagger JSON available at http://localhost:${port}/api-docs.json`
+    );
   });
 }
