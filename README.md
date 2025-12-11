@@ -91,11 +91,26 @@ Response:
 
 **Option 1: Via Swagger UI (for testing)**
 
-1. Open http://localhost:8080/api-docs
-2. Click **🔓 Authorize** button (top right)
-3. Enter: `Bearer <your-token>` (e.g., `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`)
-4. Click **Authorize** → **Close**
-5. Now try any `/todos` endpoint ✅
+## 📚 API Documentation
+
+Swagger UI is available at `http://localhost:8080/api-docs`
+
+**Authentication:**
+
+- All `/todos` endpoints are protected
+- You must include the JWT token in the `Authorization` header:
+  ```
+  Authorization: Bearer <your-token>
+  ```
+
+## 🤖 AI Code Generation (For Frontend Devs)
+
+To easiest way to generate frontend code (React Query, Types, Axios) that is compatible with this backend:
+
+1. Go to **[http://localhost:8080/api-docs.json](http://localhost:8080/api-docs.json)**
+2. Copy the entire JSON content
+3. Paste it to your AI Chat (ChatGPT/Claude/Cursor) with this prompt:
+   > "Here is the backend API Swagger JSON. Please generate the frontend TypeScript types and React Query hooks for these endpoints. Use `Authorization: Bearer` header."
 
 **Option 2: Via Code (for frontend)**
 

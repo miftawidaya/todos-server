@@ -33,11 +33,11 @@ const swaggerOptions = {
     ],
     components: {
       securitySchemes: {
-        ApiKeyAuth: {
-          type: 'apiKey',
-          in: 'header',
-          name: 'api-key',
-          description: 'API key for accessing protected endpoints',
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'JWT Bearer token for accessing protected endpoints',
         },
       },
       schemas: {

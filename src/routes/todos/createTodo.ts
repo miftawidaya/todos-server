@@ -18,13 +18,24 @@ const router = express.Router();
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/NewTodo'
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: The created todo
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Todo'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Todo created successfully
+ *                 data:
+ *                   $ref: '#/components/schemas/Todo'
  *       500:
  *         description: Server error
  */

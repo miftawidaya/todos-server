@@ -44,6 +44,8 @@ type TodoKey = 'id' | 'title' | 'completed' | 'date';
  *           enum: [asc, desc]
  *           default: asc
  *         description: Sort order (ascending or descending).
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: A paginated list of todos
@@ -52,20 +54,29 @@ type TodoKey = 'id' | 'title' | 'completed' | 'date';
  *             schema:
  *               type: object
  *               properties:
- *                 todos:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Todo'
- *                 totalTodos:
- *                   type: integer
- *                   description: Total number of todos available.
- *                 hasNextPage:
+ *                 success:
  *                   type: boolean
- *                   description: Indicates if there is another page.
- *                 nextPage:
- *                   type: integer
- *                   nullable: true
- *                   description: The next page number, or null if there are no more pages.
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Todos retrieved successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     todos:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Todo'
+ *                     totalTodos:
+ *                       type: integer
+ *                       description: Total number of todos available.
+ *                     hasNextPage:
+ *                       type: boolean
+ *                       description: Indicates if there is another page.
+ *                     nextPage:
+ *                       type: integer
+ *                       nullable: true
+ *                       description: The next page number, or null if there are no more pages.
  *       500:
  *         description: Server error
  *
