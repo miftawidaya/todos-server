@@ -1,7 +1,8 @@
 import request from 'supertest';
 import { app } from '../../../app';
+import { generateTestToken } from '../../helpers/jwt.helper';
 
-const API_KEY = 'test-api-key-for-testing';
+const AUTH_TOKEN = generateTestToken();
 
 describe('PUT /todos/:id', () => {
   let existingTodoId: string;
@@ -10,19 +11,19 @@ describe('PUT /todos/:id', () => {
   beforeAll(async () => {
     const response = await request(app)
       .post('/todos')
-      .set('api-key', API_KEY)
+      .set('Authorization', `Bearer ${AUTH_TOKEN}`)
       .send({
         title: 'Todo to update',
         completed: false,
       });
-    existingTodoId = response.body.id;
+    existingTodoId = response.body.data.id;
   });
 
-  describe('With valid API key', () => {
+  describe('With valid JWT token', () => {
     it('should update an existing todo', async () => {
       const response = await request(app)
         .put(`/todos/${existingTodoId}`)
-        .set('api-key', API_KEY)
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`)
         .send({
           title: 'Updated title',
           completed: true,
@@ -30,14 +31,15 @@ describe('PUT /todos/:id', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('title', 'Updated title');
-      expect(response.body).toHaveProperty('completed', true);
+      expect(response.body.success).toBe(true);
+      expect(response.body.data).toHaveProperty('title', 'Updated title');
+      expect(response.body.data).toHaveProperty('completed', true);
     });
 
     it('should return 404 for non-existent todo', async () => {
       const response = await request(app)
         .put('/todos/non-existent-id')
-        .set('api-key', API_KEY)
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`)
         .send({
           title: 'Test',
           completed: false,
@@ -53,7 +55,7 @@ describe('PUT /todos/:id', () => {
     it('should return 400 for invalid body', async () => {
       const response = await request(app)
         .put(`/todos/${existingTodoId}`)
-        .set('api-key', API_KEY)
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`)
         .send({});
 
       expect(response.status).toBe(400);

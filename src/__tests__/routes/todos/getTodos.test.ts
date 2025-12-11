@@ -1,38 +1,44 @@
 import request from 'supertest';
 import { app } from '../../../app';
+import { generateTestToken } from '../../helpers/jwt.helper';
 
-const API_KEY = 'test-api-key-for-testing';
+const AUTH_TOKEN = generateTestToken();
 
 describe('GET /todos', () => {
-  describe('With valid API key', () => {
+  describe('With valid JWT token', () => {
     it('should return paginated todos', async () => {
-      const response = await request(app).get('/todos').set('api-key', API_KEY);
+      const response = await request(app)
+        .get('/todos')
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('todos');
-      expect(response.body).toHaveProperty('totalTodos');
-      expect(response.body).toHaveProperty('hasNextPage');
-      expect(Array.isArray(response.body.todos)).toBe(true);
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('message');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body.data).toHaveProperty('todos');
+      expect(response.body.data).toHaveProperty('totalTodos');
+      expect(response.body.data).toHaveProperty('hasNextPage');
+      expect(Array.isArray(response.body.data.todos)).toBe(true);
     });
 
     it('should respect pagination params', async () => {
       const response = await request(app)
         .get('/todos')
         .query({ page: 1, limit: 5 })
-        .set('api-key', API_KEY);
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.todos.length).toBeLessThanOrEqual(5);
+      expect(response.body.data.todos.length).toBeLessThanOrEqual(5);
     });
 
     it('should filter by completed status', async () => {
       const response = await request(app)
         .get('/todos')
         .query({ completed: 'true' })
-        .set('api-key', API_KEY);
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      response.body.todos.forEach((todo: { completed: boolean }) => {
+      response.body.data.todos.forEach((todo: { completed: boolean }) => {
         expect(todo.completed).toBe(true);
       });
     });
@@ -41,10 +47,10 @@ describe('GET /todos', () => {
       const response = await request(app)
         .get('/todos')
         .query({ completed: 'false' })
-        .set('api-key', API_KEY);
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      response.body.todos.forEach((todo: { completed: boolean }) => {
+      response.body.data.todos.forEach((todo: { completed: boolean }) => {
         expect(todo.completed).toBe(false);
       });
     });
@@ -53,10 +59,12 @@ describe('GET /todos', () => {
       const response = await request(app)
         .get('/todos')
         .query({ sort: 'title', order: 'asc', limit: 10 })
-        .set('api-key', API_KEY);
+        .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      const titles = response.body.todos.map((t: { title: string }) => t.title);
+      const titles = response.body.data.todos.map(
+        (t: { title: string }) => t.title
+      );
       const sortedTitles = [...titles].sort();
       expect(titles).toEqual(sortedTitles);
     });

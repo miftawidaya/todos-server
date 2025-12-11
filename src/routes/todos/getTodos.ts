@@ -1,9 +1,9 @@
-import express from 'express'
-import { getTodos } from '../../mockup/todos'
+import express from 'express';
+import { getTodos } from '../../mockup/todos';
 
-const router = express.Router()
+const router = express.Router();
 
-type TodoKey = 'id' | 'title' | 'completed' | 'date'
+type TodoKey = 'id' | 'title' | 'completed' | 'date';
 
 /**
  * @swagger
@@ -97,50 +97,54 @@ router.get('/', async (req, res) => {
       limit = 10,
       sort = 'date',
       order = 'asc',
-    } = req.query
+    } = req.query;
 
-    let todos = getTodos()
+    let todos = getTodos();
 
     if (completed === 'true') {
-      todos = todos.filter((todo) => todo.completed)
+      todos = todos.filter((todo) => todo.completed);
     } else if (completed === 'false') {
-      todos = todos.filter((todo) => !todo.completed)
+      todos = todos.filter((todo) => !todo.completed);
     }
 
     if (sort && ['id', 'title', 'completed', 'date'].includes(sort as string)) {
       todos = todos.sort((a, b) => {
-        const key = sort as TodoKey
+        const key = sort as TodoKey;
 
-        const aValue = key === 'date' ? new Date(a[key]).getTime() : a[key]
-        const bValue = key === 'date' ? new Date(b[key]).getTime() : b[key]
+        const aValue = key === 'date' ? new Date(a[key]).getTime() : a[key];
+        const bValue = key === 'date' ? new Date(b[key]).getTime() : b[key];
 
-        if (aValue < bValue) return order === 'asc' ? -1 : 1
-        if (aValue > bValue) return order === 'asc' ? 1 : -1
-        return 0
-      })
+        if (aValue < bValue) return order === 'asc' ? -1 : 1;
+        if (aValue > bValue) return order === 'asc' ? 1 : -1;
+        return 0;
+      });
     }
 
-    const pageNum = parseInt(page as string, 10)
-    const limitNum = parseInt(limit as string, 10)
+    const pageNum = parseInt(page as string, 10);
+    const limitNum = parseInt(limit as string, 10);
 
-    const startIndex = (pageNum - 1) * limitNum
-    const endIndex = startIndex + limitNum
+    const startIndex = (pageNum - 1) * limitNum;
+    const endIndex = startIndex + limitNum;
 
-    const paginatedTodos = todos.slice(startIndex, endIndex)
+    const paginatedTodos = todos.slice(startIndex, endIndex);
 
-    const totalTodos = todos.length
-    const hasNextPage = endIndex < totalTodos
-    const nextPage = hasNextPage ? pageNum + 1 : null
+    const totalTodos = todos.length;
+    const hasNextPage = endIndex < totalTodos;
+    const nextPage = hasNextPage ? pageNum + 1 : null;
 
     res.status(200).json({
-      todos: paginatedTodos,
-      totalTodos,
-      hasNextPage,
-      nextPage,
-    })
+      success: true,
+      message: 'Todos retrieved successfully',
+      data: {
+        todos: paginatedTodos,
+        totalTodos,
+        hasNextPage,
+        nextPage,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' })
+    res.status(500).json({ error: 'Server error' });
   }
-})
+});
 
-export { router as getTodosRouter }
+export { router as getTodosRouter };
