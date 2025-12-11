@@ -1,5 +1,11 @@
 # 📝 Todo API Server
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-green?logo=node.js)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.18-lightgrey?logo=express)](https://expressjs.com/)
+[![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
+
 REST API for learning frontend development - CRUD, Authentication, Pagination, and more.
 
 ## ⚡ Quick Start (5 minutes)
@@ -20,6 +26,51 @@ npm run dev
 **Server runs at:** http://localhost:8080
 
 **Swagger Docs:** http://localhost:8080/api-docs
+
+---
+
+## 🚀 Deploy to Vercel (1-Click)
+
+Deploy your own instance of this API in seconds:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server&env=JWT_SECRET,API_URL&envDescription=Required%20environment%20variables%20for%20the%20API&envLink=https://github.com/miftawidaya/todos-server%23environment-variables&project-name=my-todo-api&repository-name=my-todo-api)
+
+### 📋 Deployment Checklist
+
+After clicking the button above:
+
+1. **Connect your GitHub account** (if not already connected)
+2. **Set Environment Variables** in Vercel:
+   - `JWT_SECRET`: A strong random string (e.g., `your-super-secret-key-change-this`)
+   - `API_URL`: Your production URL (e.g., `https://your-api.vercel.app`)
+     - ⚠️ Leave this empty for now, we'll set it after deployment
+3. **Click "Deploy"** and wait ~2 minutes
+4. **After deployment completes:**
+   - Copy your production URL (e.g., `https://my-todo-api.vercel.app`)
+   - Go to **Settings** → **Environment Variables**
+   - Add `API_URL` with your production URL
+   - **Redeploy** the project
+
+**🎉 Done!** Your API is live and Swagger docs will show the correct URL!
+
+### 🔧 Manual Deployment (Alternative)
+
+If you prefer manual setup:
+
+```bash
+# 1. Install Vercel CLI
+npm i -g vercel
+
+# 2. Deploy
+vercel
+
+# 3. Set environment variables
+vercel env add JWT_SECRET
+vercel env add API_URL
+
+# 4. Deploy to production
+vercel --prod
+```
 
 ---
 
