@@ -45,7 +45,11 @@ router.delete('/:todoId', async (req, res) => {
 
     deleteTodo(todoId);
 
-    res.status(200).json(deletedTodo);
+    res.status(200).json({
+      success: true,
+      message: 'Todo deleted successfully',
+      data: deletedTodo,
+    });
   } catch (error) {
     console.error('Error deleting todo:', error);
 

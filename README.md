@@ -35,40 +35,85 @@ Most learning APIs are either too simple (just mock data) or too complex (full p
 
 ---
 
-## 🔑 About API Key
+## 🔑 About JWT Authentication
 
-This API uses an **API Key** to protect `/todos` endpoints.
+This API uses **JWT (JSON Web Token)** Bearer authentication to protect `/todos` endpoints.
 
-### What is an API Key?
+### What is JWT Authentication?
 
-An API Key is a "password" that must be sent with every request to protected endpoints.
+JWT is a secure way to authenticate API requests. After logging in, you receive a token that proves your identity for subsequent requests.
 
-### Where is the API Key stored?
+### How does it work?
+
+1. **Login** → Get a JWT token
+2. **Use the token** → Include it in the `Authorization: Bearer <token>` header for protected endpoints
+
+### Environment Variables
 
 In your `.env.local` file:
 
 ```bash
-PRIVATE_API_KEY=mysecretkey123   # <- This is your API Key
 PORT=8080
+JWT_SECRET=your-super-secret-key-change-this-in-production
+JWT_EXPIRES_IN=24h
 ```
 
+**⚠️ Security Note:** Always use a strong, random secret in production!
+
 ### How to use it?
+
+**Step 1: Login to get a token**
+
+```bash
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password123"}'
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "email": "user@example.com",
+      "name": "user"
+    }
+  }
+}
+```
+
+**Step 2: Use the token in protected endpoints**
 
 **Option 1: Via Swagger UI (for testing)**
 
 1. Open http://localhost:8080/api-docs
-2. Click the **🔓 Authorize** button (top right)
-3. Enter your API Key (example: `mysecretkey123`)
+2. Click **🔓 Authorize** button (top right)
+3. Enter: `Bearer <your-token>` (e.g., `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`)
 4. Click **Authorize** → **Close**
 5. Now try any `/todos` endpoint ✅
 
 **Option 2: Via Code (for frontend)**
 
 ```javascript
-// Example: fetch with API Key header
+// Save token after login
+const loginResponse = await fetch('http://localhost:8080/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'user@example.com', password: 'password123' }),
+});
+const { data } = await loginResponse.json();
+localStorage.setItem('token', data.token);
+
+// Use token in subsequent requests
+const token = localStorage.getItem('token');
 fetch('http://localhost:8080/todos', {
   headers: {
-    'api-key': 'mysecretkey123', // Replace with your API Key
+    Authorization: `Bearer ${token}`,
   },
 });
 ```
@@ -77,13 +122,13 @@ fetch('http://localhost:8080/todos', {
 
 ## 📚 API Endpoints
 
-### 🔓 Public (no API Key required)
+### 🔓 Public (no authentication required)
 
 | Method | Endpoint      | Description |
 | ------ | ------------- | ----------- |
 | POST   | `/auth/login` | User login  |
 
-### 🔒 Protected (API Key required)
+### 🔒 Protected (JWT authentication required)
 
 | Method | Endpoint         | Description                 |
 | ------ | ---------------- | --------------------------- |

@@ -1,19 +1,20 @@
-import express from 'express'
-import { getTodosRouter } from './getTodos'
-import { getScrollTodosRouter } from './getScrollTodos'
-import { createTodoRouter } from './createTodo'
-import { deleteTodoRouter } from './deleteTodo'
-import { validatePrivateApiKey } from '../../middlewares'
-import { updateTodoRouter } from './updateTodo'
+import express from 'express';
+import { getTodosRouter } from './getTodos';
+import { getScrollTodosRouter } from './getScrollTodos';
+import { createTodoRouter } from './createTodo';
+import { deleteTodoRouter } from './deleteTodo';
+import { authenticateJWT } from '../../middlewares';
+import { updateTodoRouter } from './updateTodo';
 
-const todosRouter = express.Router()
+const todosRouter = express.Router();
 
-todosRouter.use('/', validatePrivateApiKey)
+// Protect all /todos routes with JWT authentication
+todosRouter.use('/', authenticateJWT);
 
-todosRouter.use('/', getTodosRouter)
-todosRouter.use('/', getScrollTodosRouter)
-todosRouter.use('/', createTodoRouter)
-todosRouter.use('/', updateTodoRouter)
-todosRouter.use('/', deleteTodoRouter)
+todosRouter.use('/', getTodosRouter);
+todosRouter.use('/', getScrollTodosRouter);
+todosRouter.use('/', createTodoRouter);
+todosRouter.use('/', updateTodoRouter);
+todosRouter.use('/', deleteTodoRouter);
 
-export { todosRouter }
+export { todosRouter };

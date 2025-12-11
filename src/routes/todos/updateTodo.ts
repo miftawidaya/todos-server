@@ -57,7 +57,11 @@ router.put('/:id', async (req, res): Promise<void> => {
 
     setTodos(updatedTodo.id, updatedTodo);
 
-    res.status(200).json(getTodo(updatedTodo.id));
+    res.status(200).json({
+      success: true,
+      message: 'Todo updated successfully',
+      data: getTodo(updatedTodo.id),
+    });
   } catch (error) {
     console.error('Error updating todo:', error);
 

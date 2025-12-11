@@ -2,6 +2,7 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { handleZodErrorResponse } from '../../utils/error';
 import { LoginRequestSchema } from '../../types/auth';
+import { generateToken } from '../../utils/jwt';
 
 const router = express.Router();
 
@@ -9,8 +10,8 @@ const router = express.Router();
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Login user (Mock Authentication)
- *     description: Mock login endpoint. Accepts any valid email and password (min 6 chars). Returns a mock token and user object.
+ *     summary: Login user (JWT Authentication)
+ *     description: Login endpoint that generates a real JWT token for authentication. Accepts any valid email and password (min 6 chars).
  *     tags:
  *       - Auth
  *     security: []
@@ -51,7 +52,7 @@ const router = express.Router();
  *                   properties:
  *                     token:
  *                       type: string
- *                       example: "mock-jwt-token-abc123"
+ *                       example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  *                     user:
  *                       type: object
  *                       properties:
@@ -100,21 +101,21 @@ router.post('/', async (req, res) => {
     // 3. Generate JWT token
 
     // Simulated user (replace with actual database lookup)
-    const mockUser = {
+    const user = {
       id: uuidv4(),
       email: loginData.email,
       name: loginData.email.split('@')[0], // Extract name from email
     };
 
-    // Simulated token (replace with actual JWT generation)
-    const mockToken = `mock-jwt-token-${uuidv4()}`;
+    // Generate real JWT token
+    const token = generateToken(user);
 
     const response = {
       success: true,
       message: 'Login successful',
       data: {
-        token: mockToken,
-        user: mockUser,
+        token,
+        user,
       },
     };
 
