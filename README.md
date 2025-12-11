@@ -57,15 +57,24 @@ PORT=8080
 JWT_SECRET=your-super-secret-key-change-this-in-production
 JWT_EXPIRES_IN=24h
 
-# Production URL for Swagger documentation (optional)
-# Defaults to http://localhost:8080 if not set
-# Set this to your deployed URL when deploying to production
-PRODUCTION_URL=https://your-api.vercel.app
+# API URL for Swagger documentation (optional)
+# If not set, automatically detects:
+#   - Vercel deployment → uses VERCEL_URL
+#   - Local development → uses http://localhost:8080
+# Only set this if you need to override auto-detection
+API_URL=https://your-api.example.com
 ```
 
 **⚠️ Security Note:** Always use a strong, random secret in production!
 
-**💡 Deployment Tip:** When deploying to Vercel or other platforms, set `PRODUCTION_URL` environment variable to your deployed URL. This will automatically update the Swagger documentation to point to your production API instead of localhost.
+**💡 Smart URL Detection:**
+
+- **Local Development**: No configuration needed! Automatically uses `http://localhost:8080`
+- **Vercel Deployment**: Automatically detects your Vercel URL from `VERCEL_URL` environment variable
+- **Custom Domain**: Set `API_URL` environment variable to override auto-detection
+- **Staging/Preview**: Each Vercel preview branch gets its own URL automatically!
+
+This means you can deploy to Vercel without setting any environment variables - it just works! ✨
 
 ### How to use it?
 

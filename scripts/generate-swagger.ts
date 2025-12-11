@@ -2,9 +2,24 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import fs from 'fs';
 import path from 'path';
 
-// Get production URL from environment variable or use localhost as default
-// Users should set PRODUCTION_URL in their deployment environment (e.g., Vercel)
-const productionUrl = process.env.PRODUCTION_URL || 'http://localhost:8080';
+// Smart URL detection for Swagger documentation
+// Priority: API_URL env var > Vercel auto-detection > localhost
+const getApiUrl = (): string => {
+  // 1. Explicit API_URL (highest priority)
+  if (process.env.API_URL) {
+    return process.env.API_URL;
+  }
+
+  // 2. Auto-detect Vercel deployment
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // 3. Default to localhost for local development
+  return 'http://localhost:8080';
+};
+
+const apiUrl = getApiUrl();
 
 const swaggerOptions = {
   definition: {
@@ -17,12 +32,8 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: productionUrl,
-        description: 'Production Server',
-      },
-      {
-        url: 'http://localhost:8080',
-        description: 'Development server',
+        url: apiUrl,
+        description: 'API Server',
       },
     ],
     tags: [
