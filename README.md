@@ -70,11 +70,22 @@ API_URL=https://your-api.example.com
 **💡 Smart URL Detection:**
 
 - **Local Development**: No configuration needed! Automatically uses `http://localhost:8080`
-- **Vercel Deployment**: Automatically detects your Vercel URL from `VERCEL_URL` environment variable
-- **Custom Domain**: Set `API_URL` environment variable to override auto-detection
-- **Staging/Preview**: Each Vercel preview branch gets its own URL automatically!
+- **Vercel Deployment**: Automatically detects deployment URL from `VERCEL_URL`
+  - ⚠️ **For Production**: Set `API_URL` in Vercel Environment Variables to use your production domain
+  - Without `API_URL`, it will use the auto-generated Vercel URL (e.g., `project-abc123.vercel.app`)
+- **Custom Domain**: Set `API_URL` environment variable to your custom domain
 
-This means you can deploy to Vercel without setting any environment variables - it just works! ✨
+**📝 How to set API_URL in Vercel:**
+
+1. Go to your project in Vercel Dashboard
+2. Navigate to **Settings** → **Environment Variables**
+3. Add new variable:
+   - **Name**: `API_URL`
+   - **Value**: `https://api-todo-server.vercel.app` (your production URL)
+   - **Environment**: Production (or all environments)
+4. Redeploy your project
+
+This ensures your Swagger documentation always points to the correct URL! ✨
 
 ### How to use it?
 

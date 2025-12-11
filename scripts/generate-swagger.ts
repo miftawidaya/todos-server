@@ -3,14 +3,18 @@ import fs from 'fs';
 import path from 'path';
 
 // Smart URL detection for Swagger documentation
-// Priority: API_URL env var > Vercel auto-detection > localhost
+// Priority: API_URL > VERCEL_URL > localhost
 const getApiUrl = (): string => {
   // 1. Explicit API_URL (highest priority)
+  // Set this in Vercel for production to use your custom domain
+  // Example: https://api-todo-server.vercel.app
   if (process.env.API_URL) {
     return process.env.API_URL;
   }
 
-  // 2. Auto-detect Vercel deployment
+  // 2. Auto-detect Vercel deployment URL
+  // This will be the deployment URL (could be preview or production)
+  // Example: https://project-abc123.vercel.app
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
