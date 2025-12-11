@@ -56,9 +56,16 @@ In your `.env.local` file:
 PORT=8080
 JWT_SECRET=your-super-secret-key-change-this-in-production
 JWT_EXPIRES_IN=24h
+
+# Production URL for Swagger documentation (optional)
+# Defaults to http://localhost:8080 if not set
+# Set this to your deployed URL when deploying to production
+PRODUCTION_URL=https://your-api.vercel.app
 ```
 
 **⚠️ Security Note:** Always use a strong, random secret in production!
+
+**💡 Deployment Tip:** When deploying to Vercel or other platforms, set `PRODUCTION_URL` environment variable to your deployed URL. This will automatically update the Swagger documentation to point to your production API instead of localhost.
 
 ### How to use it?
 

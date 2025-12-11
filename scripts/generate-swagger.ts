@@ -1,7 +1,10 @@
-
 import swaggerJsdoc from 'swagger-jsdoc';
 import fs from 'fs';
 import path from 'path';
+
+// Get production URL from environment variable or use localhost as default
+// Users should set PRODUCTION_URL in their deployment environment (e.g., Vercel)
+const productionUrl = process.env.PRODUCTION_URL || 'http://localhost:8080';
 
 const swaggerOptions = {
   definition: {
@@ -9,11 +12,12 @@ const swaggerOptions = {
     info: {
       title: 'Todo API',
       version: '1.0.0',
-      description: 'REST API for managing todos - designed for learning frontend development',
+      description:
+        'REST API for managing todos - designed for learning frontend development',
     },
     servers: [
       {
-        url: 'https://api-todo-server.vercel.app',
+        url: productionUrl,
         description: 'Production Server',
       },
       {
