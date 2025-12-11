@@ -29,7 +29,7 @@ npm run dev
 
 **Swagger Docs:** http://localhost:8080/api-docs
 
----
+**Swagger JSON:** http://localhost:8080/api-docs.json
 
 ## 🚀 Deploy to Vercel (1-Click)
 
