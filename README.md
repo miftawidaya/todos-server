@@ -350,7 +350,111 @@ Having trouble? Here's how to get help:
 
 1. Check the Swagger docs at http://localhost:8080/api-docs
 2. Look at the test files in `__tests__/` for usage examples
-3. Open an issue on GitHub
+3. Check the **Troubleshooting** section below
+4. Open an issue on GitHub
+
+---
+
+## 🔧 Troubleshooting
+
+### Deployment Issues
+
+**Problem: Swagger shows wrong URL (preview URL instead of production)**
+
+```
+URL shows: https://project-abc123.vercel.app
+Expected: https://api-todo-server.vercel.app
+```
+
+**Solution:**
+
+1. Go to Vercel Dashboard → Your Project
+2. **Settings** → **Environment Variables**
+3. Add `API_URL` with your production URL
+4. **Deployments** → Click **...** → **Redeploy**
+
+---
+
+**Problem: "Cannot find module" errors after deployment**
+
+**Solution:**
+
+```bash
+# Make sure all dependencies are in dependencies, not devDependencies
+npm install --save express cors swagger-ui-express
+
+# Commit and push
+git add package.json package-lock.json
+git commit -m "fix: move dependencies"
+git push
+```
+
+---
+
+**Problem: Environment variables not working**
+
+**Solution:**
+
+1. Check variable names are EXACTLY correct (case-sensitive)
+2. Make sure you selected the right environment (Production/Preview/Development)
+3. Redeploy after adding variables
+4. Check Vercel logs: **Deployments** → Click deployment → **View Function Logs**
+
+---
+
+**Problem: API returns 404 on Vercel**
+
+**Solution:**
+Check your `vercel.json` configuration:
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.ts"
+    }
+  ]
+}
+```
+
+---
+
+### Local Development Issues
+
+**Problem: Port already in use**
+
+**Solution:**
+
+```bash
+# Find and kill process on port 8080
+lsof -ti:8080 | xargs kill -9
+
+# Or use a different port
+PORT=3000 npm run dev
+```
+
+---
+
+**Problem: TypeScript errors**
+
+**Solution:**
+
+```bash
+# Clean install
+rm -rf node_modules package-lock.json
+npm install
+
+# Rebuild
+npm run build
+```
 
 ---
 
