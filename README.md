@@ -44,7 +44,7 @@ After clicking the button above:
 1. **Connect your GitHub account** (if not already connected)
 2. **Set Environment Variables** in Vercel:
    - `JWT_SECRET`: A strong random string (e.g., `your-super-secret-key-change-this`)
-   - `API_URL`: Your production URL (e.g., `https://your-api.vercel.app`)
+   - `API_URL`: Your production URL (e.g., `https://my-todo-api.vercel.app`)
      - ⚠️ Leave this empty for now, we'll set it after deployment
 3. **Click "Deploy"** and wait ~2 minutes
 4. **After deployment completes:**
