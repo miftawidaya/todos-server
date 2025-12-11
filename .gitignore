@@ -6,8 +6,8 @@ dist/
 
 # Environment files (contain secrets)
 .env
-.env.local
-.env.*.local
+!.env.local
+!.env.*.local
 !.env.example
 
 # Logs
