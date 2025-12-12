@@ -7,7 +7,7 @@ import { deleteTodo, getTodo } from '../../mockup/todos';
 const router = express.Router();
 
 const deleteTodoParamsSchema = z.object({
-  todoId: TodoSchema.shape.id,
+  id: TodoSchema.shape.id,
 });
 
 /**
@@ -32,35 +32,27 @@ const deleteTodoParamsSchema = z.object({
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: Todo deleted successfully
- *                 data:
- *                   $ref: '#/components/schemas/Todo'
+ *               $ref: '#/components/schemas/Todo'
  *       404:
  *         description: Todo not found
  *       500:
  *         description: Server error
  */
 
-router.delete('/:todoId', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const { todoId } = deleteTodoParamsSchema.parse(req.params);
+    const { id } = deleteTodoParamsSchema.parse(req.params);
 
-    const deletedTodo = getTodo(todoId) ?? {};
+    const deletedTodo = getTodo(id);
 
-    deleteTodo(todoId);
+    if (!deletedTodo) {
+      res.status(404).json({ error: 'Todo not found' });
+      return;
+    }
 
-    res.status(200).json({
-      success: true,
-      message: 'Todo deleted successfully',
-      data: deletedTodo,
-    });
+    deleteTodo(id);
+
+    res.status(200).json(deletedTodo);
   } catch (error) {
     console.error('Error deleting todo:', error);
 

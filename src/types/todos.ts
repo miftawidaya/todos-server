@@ -5,6 +5,7 @@ export const TodoSchema = z.object({
   title: z.string(),
   completed: z.boolean(),
   date: z.date(),
+  priority: z.enum(['LOW', 'MEDIUM', 'HIGH']).default('MEDIUM'),
 });
 export type Todo = z.infer<typeof TodoSchema>;
 

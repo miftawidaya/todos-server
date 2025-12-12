@@ -36,20 +36,20 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The unique identifier for the todo."
+            "description": "Unique identifier"
           },
           "title": {
             "type": "string",
-            "description": "The title or name of the todo."
+            "description": "Todo title"
           },
           "completed": {
             "type": "boolean",
-            "description": "Whether the todo is completed or not."
+            "description": "Completion status"
           },
           "date": {
             "type": "string",
             "format": "date-time",
-            "description": "The date associated with the todo."
+            "description": "Creation date"
           }
         },
         "required": [
@@ -190,20 +190,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Todo created successfully"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/Todo"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Todo"
                 }
               }
             }
@@ -223,10 +210,37 @@
             "in": "query",
             "name": "completed",
             "schema": {
-              "type": "boolean",
-              "nullable": true
+              "type": "boolean"
             },
-            "description": "Filter todos by their completion status (true, false, or omit to fetch all)."
+            "description": "Filter by completion status (true/false). Omit to fetch all."
+          },
+          {
+            "in": "query",
+            "name": "priority",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "LOW",
+                "MEDIUM",
+                "HIGH"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "dateGte",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dateLte",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
             "in": "query",
@@ -234,8 +248,7 @@
             "schema": {
               "type": "integer",
               "default": 1
-            },
-            "description": "Page number for pagination (starting from 1)."
+            }
           },
           {
             "in": "query",
@@ -243,8 +256,7 @@
             "schema": {
               "type": "integer",
               "default": 10
-            },
-            "description": "Number of todos per page."
+            }
           },
           {
             "in": "query",
@@ -252,11 +264,13 @@
             "schema": {
               "type": "string",
               "enum": [
+                "id",
                 "title",
-                "date"
+                "completed",
+                "date",
+                "priority"
               ]
-            },
-            "description": "Field to sort todos by."
+            }
           },
           {
             "in": "query",
@@ -268,8 +282,7 @@
                 "desc"
               ],
               "default": "asc"
-            },
-            "description": "Sort order (ascending or descending)."
+            }
           }
         ],
         "security": [
@@ -279,51 +292,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A paginated list of todos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Todos retrieved successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "todos": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Todo"
-                          }
-                        },
-                        "totalTodos": {
-                          "type": "integer",
-                          "description": "Total number of todos available."
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "description": "Indicates if there is another page."
-                        },
-                        "nextPage": {
-                          "type": "integer",
-                          "nullable": true,
-                          "description": "The next page number, or null if there are no more pages."
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error"
+            "description": "A paginated list of todos"
           }
         }
       }
@@ -356,20 +325,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Todo deleted successfully"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/Todo"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Todo"
                 }
               }
             }
@@ -419,20 +375,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Todo updated successfully"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/Todo"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Todo"
                 }
               }
             }

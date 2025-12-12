@@ -33,16 +33,7 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: Todo updated successfully
- *                 data:
- *                   $ref: '#/components/schemas/Todo'
+ *               $ref: '#/components/schemas/Todo'
  *       404:
  *         description: Todo not found
  *       500:
@@ -68,11 +59,7 @@ router.put('/:id', async (req, res): Promise<void> => {
 
     setTodos(updatedTodo.id, updatedTodo);
 
-    res.status(200).json({
-      success: true,
-      message: 'Todo updated successfully',
-      data: getTodo(updatedTodo.id),
-    });
+    res.status(200).json(getTodo(updatedTodo.id));
   } catch (error) {
     console.error('Error updating todo:', error);
 

@@ -26,16 +26,7 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: Todo created successfully
- *                 data:
- *                   $ref: '#/components/schemas/Todo'
+ *               $ref: '#/components/schemas/Todo'
  *       500:
  *         description: Server error
  */
@@ -46,11 +37,7 @@ router.post('/', async (req, res) => {
 
     const insertedTodo = addTodo(newTodo);
 
-    res.status(200).json({
-      success: true,
-      message: 'Todo created successfully',
-      data: insertedTodo,
-    });
+    res.status(200).json(insertedTodo);
   } catch (error) {
     console.error('Error creating todo:', error);
 
