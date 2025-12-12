@@ -425,11 +425,28 @@ Check your `vercel.json` configuration:
 
 **Solution:**
 
+**Linux/Mac:**
 ```bash
 # Find and kill process on port 8080
 lsof -ti:8080 | xargs kill -9
+```
 
-# Or use a different port
+**Windows (PowerShell):**
+```powershell
+# Find process using port 8080
+netstat -ano | findstr :8080
+
+# Kill process by PID (replace <PID> with actual number)
+taskkill /PID <PID> /F
+
+# Example:
+# netstat -ano | findstr :8080
+#   TCP    0.0.0.0:8080    0.0.0.0:0    LISTENING    12345
+# taskkill /PID 12345 /F
+```
+
+**Or use a different port (all platforms):**
+```bash
 PORT=3000 npm run dev
 ```
 

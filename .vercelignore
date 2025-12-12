@@ -17,15 +17,10 @@ coverage
 .idea
 *.log
 
-# Source files (we only need dist/)
-src
-
-# Build artifacts that aren't needed
-tsconfig.json
-tsconfig.*.json
-
 # Documentation
 README.md
+ENVIRONMENT_VARIABLES.md
+VERCEL_DEPLOYMENT.md
 docs
 
 # Git

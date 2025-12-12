@@ -1,6 +1,3 @@
-// Load environment variables for Vercel serverless function
-import 'dotenv/config';
-
-import { app } from '../src/app';
+import { app } from '../dist/app';
 
 export default app;
