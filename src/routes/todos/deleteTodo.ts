@@ -24,13 +24,24 @@ const deleteTodoParamsSchema = z.object({
  *         schema:
  *           type: string
  *         description: The ID of the todo to delete
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: The deleted todo
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Todo'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Todo deleted successfully
+ *                 data:
+ *                   $ref: '#/components/schemas/Todo'
  *       404:
  *         description: Todo not found
  *       500:

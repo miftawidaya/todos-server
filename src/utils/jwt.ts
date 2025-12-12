@@ -4,7 +4,7 @@ import type { User } from '../types/auth';
 // Get JWT secret from environment variable
 const JWT_SECRET =
   process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h';
 
 /**
  * Generate JWT token for a user

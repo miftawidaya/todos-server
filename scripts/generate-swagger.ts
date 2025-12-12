@@ -1,7 +1,29 @@
-
 import swaggerJsdoc from 'swagger-jsdoc';
 import fs from 'fs';
 import path from 'path';
+
+// Smart URL detection for Swagger documentation
+// Priority: API_URL > VERCEL_URL > localhost
+const getApiUrl = (): string => {
+  // 1. Explicit API_URL (highest priority)
+  // Set this in Vercel for production to use your custom domain
+  // Example: https://api-todo-server.vercel.app
+  if (process.env.API_URL) {
+    return process.env.API_URL;
+  }
+
+  // 2. Auto-detect Vercel deployment URL
+  // This will be the deployment URL (could be preview or production)
+  // Example: https://project-abc123.vercel.app
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // 3. Default to localhost for local development
+  return 'http://localhost:8080';
+};
+
+const apiUrl = getApiUrl();
 
 const swaggerOptions = {
   definition: {
@@ -9,16 +31,13 @@ const swaggerOptions = {
     info: {
       title: 'Todo API',
       version: '1.0.0',
-      description: 'REST API for managing todos - designed for learning frontend development',
+      description:
+        'REST API for managing todos - designed for learning frontend development',
     },
     servers: [
       {
-        url: 'https://api-todo-server.vercel.app',
-        description: 'Production Server',
-      },
-      {
-        url: 'http://localhost:8080',
-        description: 'Development server',
+        url: apiUrl,
+        description: 'API Server',
       },
     ],
     tags: [

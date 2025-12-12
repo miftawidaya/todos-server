@@ -41,6 +41,8 @@ const router = express.Router();
  *           enum: [asc, desc]
  *           default: asc
  *         description: Sort order (ascending or descending).
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: A batch of todos for infinite scrolling
@@ -49,17 +51,26 @@ const router = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 todos:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Todo'
- *                 nextCursor:
- *                   type: integer
- *                   nullable: true
- *                   description: The cursor for the next batch, or null if no more todos.
- *                 hasNextPage:
+ *                 success:
  *                   type: boolean
- *                   description: Whether there are more todos to load.
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Todos retrieved successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     todos:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Todo'
+ *                     nextCursor:
+ *                       type: integer
+ *                       nullable: true
+ *                       description: The cursor for the next batch, or null if no more todos.
+ *                     hasNextPage:
+ *                       type: boolean
+ *                       description: Whether there are more todos to load.
  *       500:
  *         description: Server error
  */

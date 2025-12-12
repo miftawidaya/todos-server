@@ -35,6 +35,21 @@ app.get('/api-docs.json', (_req, res) => {
   res.json(swaggerDocs);
 });
 
+// Root route - API information
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'Todo List API',
+    version: '1.0.0',
+    description: 'REST API for managing todos with JWT authentication',
+    documentation: '/api-docs',
+    swagger: '/api-docs.json',
+    endpoints: {
+      auth: '/auth/login',
+      todos: '/todos',
+    },
+  });
+});
+
 app.use('/todos', todosRouter);
 app.use('/auth', authRouter);
 
@@ -42,5 +57,8 @@ if (process.env.NODE_ENV !== 'production' && process.env.VERCEL !== '1') {
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
     console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
+    console.log(
+      `Swagger JSON available at http://localhost:${port}/api-docs.json`
+    );
   });
 }

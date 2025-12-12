@@ -1,6 +1,14 @@
 # 📝 Todo API Server
 
-REST API for learning frontend development - CRUD, Authentication, Pagination, and more.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server&env=JWT_SECRET,API_URL&envDescription=Required%20environment%20variables%20for%20the%20API&envLink=https://github.com/miftawidaya/todos-server%23environment-variables&project-name=john-todo-api-server&repository-name=john-todo-api-server)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-green?logo=node.js)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.18-lightgrey?logo=express)](https://expressjs.com/)
+[![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
+
+**A Todo List REST API** built with TypeScript, Express, and JWT authentication. Perfect for learning modern frontend development with React Query, SWR, or any state management library.
+
+**Features:** ✨ CRUD Operations • 🔐 JWT Authentication • 📄 Pagination & Infinite Scroll • 📚 Interactive Swagger Docs • ✅ Unit Tested
 
 ## ⚡ Quick Start (5 minutes)
 
@@ -21,14 +29,63 @@ npm run dev
 
 **Swagger Docs:** http://localhost:8080/api-docs
 
+**Swagger JSON:** http://localhost:8080/api-docs.json
+
+## 🚀 Deploy to Vercel (1-Click)
+
+Deploy your own instance of this API in seconds:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/miftawidaya/todos-server&env=JWT_SECRET,API_URL&envDescription=Required%20environment%20variables%20for%20the%20API&envLink=https://github.com/miftawidaya/todos-server%23environment-variables&project-name=john-todo-api-server&repository-name=john-todo-api-server)
+
+### 📋 Deployment Checklist
+
+After clicking the button above:
+
+1. **Connect your GitHub account** (if not already connected)
+2. **Set Environment Variables** in Vercel:
+   - `JWT_SECRET`: A strong random string (e.g., `your-super-secret-key-change-this`)
+   - `API_URL`: Fill with placeholder for now (e.g., `https://john-todo-api-server.vercel.app`)
+     - 💡 **Tip:** Use your expected project name + `.vercel.app`
+     - We'll update this with the actual URL after deployment
+3. **Click "Deploy"** and wait ~2 minutes
+4. **After deployment completes:**
+   - Copy your **actual** production URL from Vercel (e.g., `https://john-todo-api-server.vercel.app`)
+   - Go to **Settings** → **Environment Variables**
+   - **Edit** `API_URL` and replace with your actual production URL
+   - **Click "Save"**
+   - **Redeploy** the project (Deployments → ... → Redeploy)
+
+**🎉 Done!** Your API is live and Swagger docs will show the correct URL!
+
+### 🔧 Manual Deployment (Alternative)
+
+If you prefer manual setup:
+
+```bash
+# 1. Install Vercel CLI
+npm i -g vercel
+
+# 2. Deploy
+vercel
+
+# 3. Set environment variables
+vercel env add JWT_SECRET
+vercel env add API_URL
+
+# 4. Deploy to production
+vercel --prod
+```
+
 ---
 
 ## 💡 Why This Project?
 
-Most learning APIs are either too simple (just mock data) or too complex (full production systems). This one hits the sweet spot: **real backend functionality** with **beginner-friendly documentation**. Perfect for building your portfolio or learning React Query, SWR, or any modern state management library.
+A **production-ready Todo List API** designed specifically for learning modern frontend development. Most learning APIs are either too simple (just mock data) or too complex (full production systems). This one hits the sweet spot: **real backend functionality** with **beginner-friendly documentation**.
+
+Perfect for building your portfolio or practicing with React Query, SWR, Zustand, or any modern state management library.
 
 - ✅ Interactive API docs (Swagger UI)
-- ✅ Real authentication and authorization patterns
+- ✅ Real JWT authentication and authorization
 - ✅ Both traditional and infinite scroll pagination
 - ✅ Comprehensive error handling examples
 - ✅ Unit tested with 90%+ coverage
@@ -56,11 +113,54 @@ In your `.env.local` file:
 PORT=8080
 JWT_SECRET=your-super-secret-key-change-this-in-production
 JWT_EXPIRES_IN=24h
+
+# API URL for Swagger documentation (optional)
+# If not set, automatically detects:
+#   - Vercel deployment → uses VERCEL_URL
+#   - Local development → uses http://localhost:8080
+# Only set this if you need to override auto-detection
+API_URL=https://your-api.example.com
 ```
 
 **⚠️ Security Note:** Always use a strong, random secret in production!
 
-### How to use it?
+**💡 Smart URL Detection:**
+
+- **Local Development**: No configuration needed! Automatically uses `http://localhost:8080`
+- **Vercel Deployment**: Automatically detects deployment URL from `VERCEL_URL`
+  - ⚠️ **For Production**: Set `API_URL` in Vercel Environment Variables to use your production domain
+  - Without `API_URL`, it will use the auto-generated Vercel URL (e.g., `project-abc123.vercel.app`)
+- **Custom Domain**: Set `API_URL` environment variable to your custom domain
+
+**📝 How to set API_URL in Vercel:**
+
+1. Go to your project in Vercel Dashboard
+2. Navigate to **Settings** → **Environment Variables**
+3. Add new variable:
+   - **Name**: `API_URL`
+   - **Value**: `https://api-todo-server.vercel.app` (your production URL)
+   - **Environment**: Production (or all environments)
+4. Redeploy your project
+
+This ensures your Swagger documentation always points to the correct URL! ✨
+
+---
+
+## 📚 API Documentation
+
+### Interactive Swagger UI
+
+Swagger UI is available at `http://localhost:8080/api-docs`
+
+**Authentication:**
+
+- All `/todos` endpoints are protected with JWT
+- You must include the JWT token in the `Authorization` header:
+  ```
+  Authorization: Bearer <your-token>
+  ```
+
+### Quick Start: Testing with cURL
 
 **Step 1: Login to get a token**
 
@@ -89,34 +189,19 @@ Response:
 
 **Step 2: Use the token in protected endpoints**
 
-**Option 1: Via Swagger UI (for testing)**
-
-1. Open http://localhost:8080/api-docs
-2. Click **🔓 Authorize** button (top right)
-3. Enter: `Bearer <your-token>` (e.g., `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`)
-4. Click **Authorize** → **Close**
-5. Now try any `/todos` endpoint ✅
-
-**Option 2: Via Code (for frontend)**
-
-```javascript
-// Save token after login
-const loginResponse = await fetch('http://localhost:8080/auth/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ email: 'user@example.com', password: 'password123' }),
-});
-const { data } = await loginResponse.json();
-localStorage.setItem('token', data.token);
-
-// Use token in subsequent requests
-const token = localStorage.getItem('token');
-fetch('http://localhost:8080/todos', {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+```bash
+curl -X GET http://localhost:8080/todos \
+  -H "Authorization: Bearer <your-token>"
 ```
+
+## 🤖 AI Code Generation (For Frontend Devs)
+
+The easiest way to generate frontend code (React Query, Types, Axios) that is compatible with this backend:
+
+1. Go to **[http://localhost:8080/api-docs.json](http://localhost:8080/api-docs.json)**
+2. Copy the entire JSON content
+3. Paste it to your AI Chat (ChatGPT/Claude/Cursor) with this prompt:
+   > "Here is the backend API Swagger JSON. Please generate the frontend TypeScript types and React Query hooks for these endpoints. Use `Authorization: Bearer` header."
 
 ---
 
@@ -257,7 +342,111 @@ Having trouble? Here's how to get help:
 
 1. Check the Swagger docs at http://localhost:8080/api-docs
 2. Look at the test files in `__tests__/` for usage examples
-3. Open an issue on GitHub
+3. Check the **Troubleshooting** section below
+4. Open an issue on GitHub
+
+---
+
+## 🔧 Troubleshooting
+
+### Deployment Issues
+
+**Problem: Swagger shows wrong URL (preview URL instead of production)**
+
+```
+URL shows: https://project-abc123.vercel.app
+Expected: https://api-todo-server.vercel.app
+```
+
+**Solution:**
+
+1. Go to Vercel Dashboard → Your Project
+2. **Settings** → **Environment Variables**
+3. Add `API_URL` with your production URL
+4. **Deployments** → Click **...** → **Redeploy**
+
+---
+
+**Problem: "Cannot find module" errors after deployment**
+
+**Solution:**
+
+```bash
+# Make sure all dependencies are in dependencies, not devDependencies
+npm install --save express cors swagger-ui-express
+
+# Commit and push
+git add package.json package-lock.json
+git commit -m "fix: move dependencies"
+git push
+```
+
+---
+
+**Problem: Environment variables not working**
+
+**Solution:**
+
+1. Check variable names are EXACTLY correct (case-sensitive)
+2. Make sure you selected the right environment (Production/Preview/Development)
+3. Redeploy after adding variables
+4. Check Vercel logs: **Deployments** → Click deployment → **View Function Logs**
+
+---
+
+**Problem: API returns 404 on Vercel**
+
+**Solution:**
+Check your `vercel.json` configuration:
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.ts"
+    }
+  ]
+}
+```
+
+---
+
+### Local Development Issues
+
+**Problem: Port already in use**
+
+**Solution:**
+
+```bash
+# Find and kill process on port 8080
+lsof -ti:8080 | xargs kill -9
+
+# Or use a different port
+PORT=3000 npm run dev
+```
+
+---
+
+**Problem: TypeScript errors**
+
+**Solution:**
+
+```bash
+# Clean install
+rm -rf node_modules package-lock.json
+npm install
+
+# Rebuild
+npm run build
+```
 
 ---
 

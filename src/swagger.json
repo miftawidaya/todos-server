@@ -7,12 +7,8 @@
   },
   "servers": [
     {
-      "url": "https://api-todo-server.vercel.app",
-      "description": "Production Server"
-    },
-    {
       "url": "http://localhost:8080",
-      "description": "Development server"
+      "description": "API Server"
     }
   ],
   "tags": [
@@ -183,13 +179,31 @@
             }
           }
         },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "The created todo",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Todo"
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Todo created successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  }
                 }
               }
             }
@@ -258,6 +272,11 @@
             "description": "Sort order (ascending or descending)."
           }
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "A paginated list of todos",
@@ -266,24 +285,37 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "todos": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Todo"
-                      }
-                    },
-                    "totalTodos": {
-                      "type": "integer",
-                      "description": "Total number of todos available."
-                    },
-                    "hasNextPage": {
+                    "success": {
                       "type": "boolean",
-                      "description": "Indicates if there is another page."
+                      "example": true
                     },
-                    "nextPage": {
-                      "type": "integer",
-                      "nullable": true,
-                      "description": "The next page number, or null if there are no more pages."
+                    "message": {
+                      "type": "string",
+                      "example": "Todos retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "todos": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Todo"
+                          }
+                        },
+                        "totalTodos": {
+                          "type": "integer",
+                          "description": "Total number of todos available."
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "description": "Indicates if there is another page."
+                        },
+                        "nextPage": {
+                          "type": "integer",
+                          "nullable": true,
+                          "description": "The next page number, or null if there are no more pages."
+                        }
+                      }
                     }
                   }
                 }
@@ -313,13 +345,31 @@
             "description": "The ID of the todo to delete"
           }
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "The deleted todo",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Todo"
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Todo deleted successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  }
                 }
               }
             }
@@ -358,13 +408,31 @@
             }
           }
         },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "The updated todo",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Todo"
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Todo updated successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  }
                 }
               }
             }
@@ -437,6 +505,11 @@
             "description": "Sort order (ascending or descending)."
           }
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "A batch of todos for infinite scrolling",
@@ -445,20 +518,33 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "todos": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Todo"
-                      }
-                    },
-                    "nextCursor": {
-                      "type": "integer",
-                      "nullable": true,
-                      "description": "The cursor for the next batch, or null if no more todos."
-                    },
-                    "hasNextPage": {
+                    "success": {
                       "type": "boolean",
-                      "description": "Whether there are more todos to load."
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Todos retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "todos": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Todo"
+                          }
+                        },
+                        "nextCursor": {
+                          "type": "integer",
+                          "nullable": true,
+                          "description": "The cursor for the next batch, or null if no more todos."
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "description": "Whether there are more todos to load."
+                        }
+                      }
                     }
                   }
                 }
