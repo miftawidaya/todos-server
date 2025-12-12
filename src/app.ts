@@ -5,7 +5,6 @@ import swaggerUi from 'swagger-ui-express';
 import { todosRouter } from './routes/todos';
 import { authRouter } from './routes/auth';
 
-
 import swaggerDocs from './swagger.json';
 
 // ... (other imports remain, but swaggerJsdoc is removed below)
