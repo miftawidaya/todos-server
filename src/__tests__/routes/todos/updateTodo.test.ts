@@ -16,7 +16,7 @@ describe('PUT /todos/:id', () => {
         title: 'Todo to update',
         completed: false,
       });
-    existingTodoId = response.body.data.id;
+    existingTodoId = response.body.id;
   });
 
   describe('With valid JWT token', () => {
@@ -28,12 +28,12 @@ describe('PUT /todos/:id', () => {
           title: 'Updated title',
           completed: true,
           date: new Date().toISOString(),
+          priority: 'MEDIUM',
         });
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.data).toHaveProperty('title', 'Updated title');
-      expect(response.body.data).toHaveProperty('completed', true);
+      expect(response.body).toHaveProperty('title', 'Updated title');
+      expect(response.body).toHaveProperty('completed', true);
     });
 
     it('should return 404 for non-existent todo', async () => {
@@ -44,6 +44,7 @@ describe('PUT /todos/:id', () => {
           title: 'Test',
           completed: false,
           date: new Date().toISOString(),
+          priority: 'MEDIUM',
         });
 
       expect(response.status).toBe(404);
@@ -63,3 +64,4 @@ describe('PUT /todos/:id', () => {
     });
   });
 });
+

@@ -16,13 +16,10 @@ describe('POST /todos', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('message');
-      expect(response.body).toHaveProperty('data');
-      expect(response.body.data).toHaveProperty('id');
-      expect(response.body.data).toHaveProperty('title', 'Test todo');
-      expect(response.body.data).toHaveProperty('completed', false);
-      expect(response.body.data).toHaveProperty('date');
+      expect(response.body).toHaveProperty('id');
+      expect(response.body).toHaveProperty('title', 'Test todo');
+      expect(response.body).toHaveProperty('completed', false);
+      expect(response.body).toHaveProperty('date');
     });
 
     it('should create a completed todo', async () => {
@@ -35,8 +32,7 @@ describe('POST /todos', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.data.completed).toBe(true);
+      expect(response.body.completed).toBe(true);
     });
   });
 
@@ -76,3 +72,4 @@ describe('POST /todos', () => {
     });
   });
 });
+

@@ -12,13 +12,10 @@ describe('GET /todos', () => {
         .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('message');
-      expect(response.body).toHaveProperty('data');
-      expect(response.body.data).toHaveProperty('todos');
-      expect(response.body.data).toHaveProperty('totalTodos');
-      expect(response.body.data).toHaveProperty('hasNextPage');
-      expect(Array.isArray(response.body.data.todos)).toBe(true);
+      expect(response.body).toHaveProperty('todos');
+      expect(response.body).toHaveProperty('totalTodos');
+      expect(response.body).toHaveProperty('hasNextPage');
+      expect(Array.isArray(response.body.todos)).toBe(true);
     });
 
     it('should respect pagination params', async () => {
@@ -28,7 +25,7 @@ describe('GET /todos', () => {
         .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.data.todos.length).toBeLessThanOrEqual(5);
+      expect(response.body.todos.length).toBeLessThanOrEqual(5);
     });
 
     it('should filter by completed status', async () => {
@@ -38,7 +35,7 @@ describe('GET /todos', () => {
         .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      response.body.data.todos.forEach((todo: { completed: boolean }) => {
+      response.body.todos.forEach((todo: { completed: boolean }) => {
         expect(todo.completed).toBe(true);
       });
     });
@@ -50,7 +47,7 @@ describe('GET /todos', () => {
         .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      response.body.data.todos.forEach((todo: { completed: boolean }) => {
+      response.body.todos.forEach((todo: { completed: boolean }) => {
         expect(todo.completed).toBe(false);
       });
     });
@@ -62,7 +59,7 @@ describe('GET /todos', () => {
         .set('Authorization', `Bearer ${AUTH_TOKEN}`);
 
       expect(response.status).toBe(200);
-      const titles = response.body.data.todos.map(
+      const titles = response.body.todos.map(
         (t: { title: string }) => t.title
       );
       const sortedTitles = [...titles].sort();
@@ -70,3 +67,4 @@ describe('GET /todos', () => {
     });
   });
 });
+
