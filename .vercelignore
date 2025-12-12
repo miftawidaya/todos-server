@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Test files
+src/__tests__
+*.test.ts
+*.spec.ts
+coverage
+
+# Development files
+.vscode
+.idea
+*.log
+
+# Source files (we only need dist/)
+src
+
+# Build artifacts that aren't needed
+tsconfig.json
+tsconfig.*.json
+
+# Documentation
+README.md
+docs
+
+# Git
+.git
+.gitignore

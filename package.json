@@ -6,9 +6,10 @@
   "scripts": {
     "prestart": "npm run build",
     "dev": "cross-env DOTENV_CONFIG_PATH=.env.local nodemon --exec ts-node -r dotenv/config -r tsconfig-paths/register src/app.ts",
-    "start": "DOTENV_CONFIG_PATH=.env.local node -r dotenv/config -r tsconfig-paths/register dist/app.js",
+    "start": "node -r tsconfig-paths/register dist/app.js",
     "prebuild": "ts-node scripts/generate-swagger.ts",
     "build": "tsc",
+    "vercel-build": "npm run build",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
